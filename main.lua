@@ -18,7 +18,7 @@ controls = setmetatable({
 			keyup = Instance.new("BindableEvent"),
 		}
 		return self[key]
-	end,	
+	end,
 })
 
 plr = services.Players.LocalPlayer
@@ -223,18 +223,18 @@ commands = {
 			self.on = not self.on
 			self.name = (self.on and "unfly") or "fly"
 			self.display = self.name..(not self.on and " [flyspeed] - allows ur character to fly" or " - disables fly")	
-
-			local point
+			
+			local pos
 			while self.on and services.RunService.Heartbeat:Wait() do
 				if not plr.Character then plr.CharacterAdded:Wait() end
 				local hrp = plr.Character:FindFirstChildOfClass("Humanoid").RootPart
 				local cam = services.Workspace.CurrentCamera
 
 				local dir = (cam.CFrame.LookVector * ((controls[Enum.KeyCode.W].heldnotgpe and 1 or 0) + (controls[Enum.KeyCode.S].heldnotgpe and -1 or 0))) + (cam.CFrame.RightVector * ((controls[Enum.KeyCode.D].heldnotgpe and 1 or 0) + (controls[Enum.KeyCode.A].heldnotgpe and -1 or 0)))
-				point = (point or hrp.Position) + (dir*flyspeed)
+				pos = (pos or hrp.Position) + (dir*flyspeed)
 
 				hrp.Velocity, hrp.RotVelocity = Vector3.new(0,0,0), Vector3.new(0,0,0)
-				hrp.CFrame = CFrame.new(point, point + cam.CFrame.LookVector)
+				hrp.CFrame = CFrame.new(pos, pos + cam.CFrame.LookVector)
 			end
 		end,
 	},
@@ -262,7 +262,7 @@ commands = {
 			local t = os.clock()
 			local o = hrp.Position
 			while ((hrp.Position - o).Magnitude < 5000) and os.clock() - t < 5 and services.RunService.Heartbeat:Wait() do
-				lchar:PivotTo(char:GetPivot())
+				lchar:PivotTo(char:GetPivot() + Vector3.new(math.random(-1,1)/2,math.random(-1,1)/2,math.random(-1,1)/2))
 				lhrp.Velocity = pow
 			end
 			exec({"clip"})
