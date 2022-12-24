@@ -96,7 +96,7 @@ commands = {
 		name = "print",
 		display = "print [args] - print [args] to the console",
 		disabled = false,
-		func = function(self, ...) --... being the arguments
+		func = function(self, ...)
 			print(...)
 		end,
 	},
