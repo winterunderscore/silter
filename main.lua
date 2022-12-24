@@ -23,7 +23,7 @@ controls = setmetatable({
 
 plr = services.Players.LocalPlayer
 isstudio = services.RunService:IsStudio()
-	
+
 function new(class, properties)
 	local obj = Instance.new(class)
 	for i,v in pairs(properties) do
@@ -40,7 +40,7 @@ function randstring(len)
 	end
 	return string.char(unpack(t))
 end
-	
+
 screengui = (not isstudio and services.CoreGui:FindFirstChild("RobloxGui")) or new("ScreenGui", {Name = randstring(), ResetOnSpawn = false, Parent = (isstudio and plr:WaitForChild("PlayerGui")) or services.CoreGui})
 
 cmdbar = new("TextBox", {
@@ -88,7 +88,7 @@ replacements = {
 }
 
 cmdglobals = {
-	
+
 }
 
 commands = {
@@ -223,7 +223,7 @@ commands = {
 			self.on = not self.on
 			self.name = (self.on and "unfly") or "fly"
 			self.display = self.name..(not self.on and " [flyspeed] - allows ur character to fly" or " - disables fly")	
-			
+
 			local pos
 			while self.on and services.RunService.Heartbeat:Wait() do
 				if not plr.Character then plr.CharacterAdded:Wait() end
@@ -249,20 +249,20 @@ commands = {
 			local player = players[1]
 			if not player.Character then player.CharacterAdded:Wait() end
 			if not plr.Character then plr.CharacterAdded:Wait() end
-			
+
 			local char = player.Character
 			local hrp = char:FindFirstChildOfClass("Humanoid").RootPart
 			local lchar = plr.Character
 			local lhrp = lchar:FindFirstChildOfClass("Humanoid").RootPart
-			
+
 			local oldpos = lchar:GetPivot()
-			
+
 			exec({"noclip"})
 			exec({"density", 100})
 			local t = os.clock()
 			local o = hrp.Position
 			while ((hrp.Position - o).Magnitude < 5000) and os.clock() - t < 5 and services.RunService.Heartbeat:Wait() do
-				lchar:PivotTo(char:GetPivot() + Vector3.new(math.random(-1,1)/2,math.random(-1,1)/2,math.random(-1,1)/2))
+				lchar:PivotTo(char:GetPivot() + (hrp.Velocity/60) + Vector3.new(math.random(-1,1)/2,math.random(-1,1)/2,math.random(-1,1)/2))
 				lhrp.Velocity = pow
 			end
 			exec({"clip"})
