@@ -68,6 +68,7 @@ list = new("ScrollingFrame", {
 	["Size"] = UDim2.new(1,0,0.5,-17),
 	["ScrollBarThickness"] = 0,
 	["Visible"] = false,
+	["ScrollingEnabled"] = false,
 	["Parent"] = screengui
 })
 
@@ -261,8 +262,9 @@ commands = {
 			exec({"density", 100})
 			local t = os.clock()
 			local o = hrp.Position
-			while ((hrp.Position - o).Magnitude < 5000) and os.clock() - t < 5 and services.RunService.Heartbeat:Wait() do
-				lchar:PivotTo(char:GetPivot() + (hrp.Velocity/60) + Vector3.new(math.random(-1,1)/2,math.random(-1,1)/2,math.random(-1,1)/2))
+			while ((hrp.Position - o).Magnitude < 5000) and os.clock() - t < 5 do
+				local dt = services.RunService.Heartbeat:Wait()
+				lchar:PivotTo(char:GetPivot() + (hrp.Velocity*dt) + Vector3.new(math.random(-10,10)/30,math.random(-10,10)/30,math.random(-10,10)/30))
 				lhrp.Velocity = pow
 			end
 			exec({"clip"})
@@ -293,6 +295,23 @@ commands = {
 		display = "reset - reset ur character",
 		func = function(self, ...)
 			if plr.Character then plr.Character:BreakJoints() end
+		end,
+	},
+	{
+		name = "goto",
+		display = "goto [plr] - teleport to a player",
+		func = function(self, name)
+			local players = getplayers(name)
+			if #players <= 0 then hint("player not found") return end
+			local player = players[1]
+
+			if not player.Character then player.CharacterAdded:Wait() end
+			if not plr.Character then plr.CharacterAdded:Wait() end
+
+			local char = player.Character
+			local lchar = plr.Character
+			
+			lchar:PivotTo(char:GetPivot())			
 		end,
 	}
 }
