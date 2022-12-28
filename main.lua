@@ -258,7 +258,6 @@ commands = {
 
 			local oldpos = lchar:GetPivot()
 
-			exec({"noclip"})
 			exec({"density", 100})
 			local t = os.clock()
 			local o = hrp.Position
@@ -267,7 +266,6 @@ commands = {
 				lchar:PivotTo(char:GetPivot() + (hrp.Velocity*dt) + Vector3.new(math.random(-10,10)/30,math.random(-10,10)/30,math.random(-10,10)/30))
 				lhrp.Velocity = pow
 			end
-			exec({"clip"})
 			exec({"density", 1})
 			exec({"breakvelocity"})
 			lchar:PivotTo(oldpos)
