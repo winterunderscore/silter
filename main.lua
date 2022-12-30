@@ -277,7 +277,7 @@ commands = {
 		aliases = {"breakvel"},
 		func = function(self, ...)
 			local t = os.clock()
-			for i=0,5 do
+			for i=0,25 do
 				services.RunService.Stepped:Wait()
 				if not plr.Character then plr.CharacterAdded:Wait() end
 				for i,v in pairs(plr.Character:GetDescendants()) do
