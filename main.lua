@@ -241,8 +241,8 @@ commands = {
 	},
 	{
 		name = "fling",
-		display = "fling [plr] [power] - fling a player (default power is 10)",
-		func = function(self, name, pow, ...)
+		display = "fling [plr] [power] [timeout] - fling a player (default power is 10)",
+		func = function(self, name, pow, timeout, ...)
 			pow = 9*(10^(tonumber(pow) or 10))
 			pow = Vector3.new(pow/2,pow,pow/2)
 			local players = getplayers(name)
@@ -261,7 +261,7 @@ commands = {
 			exec({"density", 100})
 			local t = os.clock()
 			local o = hrp.Position
-			while ((hrp.Position - o).Magnitude < 5000) and os.clock() - t < 5 do
+			while ((hrp.Position - o).Magnitude < 5000) and os.clock() - t < (tonumber(timeout) or 5) do
 				local dt = services.RunService.Heartbeat:Wait()
 				lchar:PivotTo(char:GetPivot() + (hrp.Velocity*dt) + Vector3.new(math.random(-10,10)/30,math.random(-10,10)/30,math.random(-10,10)/30))
 				lhrp.Velocity = pow
